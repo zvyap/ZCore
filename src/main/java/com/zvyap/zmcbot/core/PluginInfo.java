@@ -1,6 +1,7 @@
 package com.zvyap.zmcbot.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -10,6 +11,8 @@ public class PluginInfo {
 	private String pluginName;
 	private List<String> authors;
 	private ArrayList<Version> supportedVersion = new ArrayList<Version>();
+	//if contains = depend / if boolean = hard depend
+	private HashMap<Plugin, Boolean> Plugindepends = new HashMap<PluginInfo.Plugin, Boolean>();
 	private String pluginPrefix;
 	private boolean isPublicPlugin;
 	private String pluginPage;
@@ -74,6 +77,29 @@ public class PluginInfo {
 	
 	public void setPublicPlugin(ArrayList<Version> verList) {
 		this.supportedVersion = verList;
+	}
+	
+	public HashMap<Plugin, Boolean> getPlugindepends() {
+		return Plugindepends;
+	}
+	
+	public void setPlugindepend(Plugin plugin, boolean isHardDepend) {
+		this.Plugindepends.put(plugin, isHardDepend);
+	}
+
+	public enum Plugin {
+		PlaceHolderAPI(PluginMain.getInstance().getServer().getPluginManager().getPlugin("PlaceHolderAPI")),
+		Citizens(PluginMain.getInstance().getServer().getPluginManager().getPlugin("Citizens"));
+		
+		private org.bukkit.plugin.Plugin plugin;
+		
+		Plugin(org.bukkit.plugin.Plugin plugin) {
+			this.plugin = plugin;
+		}
+
+		public org.bukkit.plugin.Plugin getPlugin() {
+			return plugin;
+		}
 	}
 
 }

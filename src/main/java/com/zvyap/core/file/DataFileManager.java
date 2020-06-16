@@ -1,4 +1,4 @@
-package com.zvyap.zmcbot.core.file;
+package com.zvyap.core.file;
 
 import java.io.File;
 import java.io.FileInputStream;

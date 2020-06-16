@@ -1,9 +1,9 @@
-package com.zvyap.zmcbot.core.utils;
+package com.zvyap.core.utils;
 
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import com.zvyap.zmcbot.core.PluginMain;
+import com.zvyap.core.PluginMain;
 
 public class Utils {
 

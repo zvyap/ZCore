@@ -1,4 +1,4 @@
-package com.zvyap.zmcbot.core;
+package com.zvyap.core;
 
 import java.util.logging.Level;
 
@@ -7,6 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.zvyap.core.utils.Utils;
 
 public abstract class PluginMain extends JavaPlugin {
 
@@ -39,6 +41,7 @@ public abstract class PluginMain extends JavaPlugin {
 		setupFile();
 		setupCommand();
 		setupListener();
+		Utils.setupUtils();
 		Bukkit.getConsoleSender().sendMessage("=====================================");
 		Bukkit.getConsoleSender().sendMessage(" ");
 		Bukkit.getConsoleSender().sendMessage(info.getPluginName() +"System Enable Successfully");

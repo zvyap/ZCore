@@ -1,8 +1,8 @@
-package com.zvyap.zmcbot.core.support;
+package com.zvyap.core.support;
 
 import org.bukkit.entity.Player;
 
-import com.zvyap.zmcbot.core.PluginMain;
+import com.zvyap.core.PluginMain;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 

@@ -1,16 +1,11 @@
-package com.zvyap.zmcbot.core.file;
+package com.zvyap.core.file;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class YmlFileManager {
 
@@ -39,19 +34,6 @@ public class YmlFileManager {
 		return config;
 	}
 
-	public ItemStack getItemStack(String field, String def) {
-		String key = this.filename + "." + field;
-		if (this.config.isSet(key))
-			return this.config.getItemStack(key);
-		if (this.config.isSet(key.toLowerCase()))
-			return this.config.getItemStack(key.toLowerCase());
-		try {
-			return new ItemStack(Material.valueOf(def));
-		} catch (Exception ex) {
-			return null;
-		}
-	}
-	
 	public boolean isSet(String path) {
 		return this.config.isSet(path);
 	}
@@ -60,35 +42,15 @@ public class YmlFileManager {
 		this.config.set(path, value);
 	}
 	
+	public void set(String path, ConfigSetting settings) {
+		this.config.set(path, settings.getString());
+	}
+	
 	public void save() {
 		try {
 			this.config.save(this.file);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	public String getColorString(String path) {
-		return ChatColor.translateAlternateColorCodes('&', config.getString(path));
-	}
-	
-	public int getInt(String path) {
-		return config.getInt(path);
-	}
-	
-	public double getDouble(String path) {
-		return config.getDouble(path);
-	}
-	
-	public String getString(String path) {
-		return config.getString(path);
-	}
-	
-	public Sound getSound(String path) {
-		try {
-			return Sound.valueOf(path);
-		} catch (Exception e) {
-			return null;
 		}
 	}
 	
@@ -105,5 +67,9 @@ public class YmlFileManager {
 
 	public Set<String> getKeys(String path) {
 		return this.config.getConfigurationSection(path).getKeys(false);
+	}
+
+	public String getFilename() {
+		return filename;
 	}
 }

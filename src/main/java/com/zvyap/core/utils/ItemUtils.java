@@ -1,4 +1,4 @@
-package com.zvyap.zmcbot.core.utils;
+package com.zvyap.core.utils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.zvyap.zmcbot.core.utils;
+package com.zvyap.core.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

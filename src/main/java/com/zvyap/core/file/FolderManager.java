@@ -1,9 +1,9 @@
-package com.zvyap.zmcbot.core.file;
+package com.zvyap.core.file;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import com.zvyap.zmcbot.core.PluginMain;
+import com.zvyap.core.PluginMain;
 
 public class FolderManager {
 

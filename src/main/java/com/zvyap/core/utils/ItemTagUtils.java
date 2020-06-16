@@ -1,10 +1,11 @@
-package com.zvyap.zmcbot.core.utils;
+package com.zvyap.core.utils;
 
 import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
-import com.zvyap.zmcbot.core.Version;
+
+import com.zvyap.core.Version;
 
 public class ItemTagUtils {
 	private static Class<?> CraftServerClass;

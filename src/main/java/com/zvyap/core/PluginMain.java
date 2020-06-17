@@ -1,13 +1,11 @@
 package com.zvyap.core;
 
-import java.util.logging.Level;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.zvyap.core.PluginInfo.Plugin;
 import com.zvyap.core.utils.Utils;
 
 public abstract class PluginMain extends JavaPlugin {
@@ -23,21 +21,21 @@ public abstract class PluginMain extends JavaPlugin {
 	protected abstract void setupListener();
 		
 	protected static PluginMain plgMain;
-	
-	protected boolean isCitizens; 
-	
+		
 	protected static Version version = Version.getCurrentVersion();
 	
 	protected static PluginInfo info;
 	
 	public final void onEnable() {
 		info = new PluginInfo(getDescription());
+		plgMain = this;
+		setupEnable();
 		if(!checkSupport()) {
 			return;
 		}
-		plgMain = this;
-		checkcitizens();
-		setupEnable();
+		if(!checkDepends()) {
+			return;
+		}
 		setupFile();
 		setupCommand();
 		setupListener();
@@ -47,6 +45,7 @@ public abstract class PluginMain extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(info.getPluginName() +"System Enable Successfully");
 		Bukkit.getConsoleSender().sendMessage(" ");
 		Bukkit.getConsoleSender().sendMessage("=====================================");
+
 	}
 
 	public final void onDisable() {
@@ -59,7 +58,7 @@ public abstract class PluginMain extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage("=====================================");
 	}
 	
-	protected void registerListener(Listener listener, Plugin plugin) {
+	protected void registerListener(Listener listener, org.bukkit.plugin.Plugin plugin) {
 		getServer().getPluginManager().registerEvents(listener, plugin);;
 	}
 	
@@ -96,14 +95,21 @@ public abstract class PluginMain extends JavaPlugin {
 		}
 	}
 	
-	private boolean checkcitizens() {
-		if(getServer().getPluginManager().getPlugin("Citizens") == null || getServer().getPluginManager().getPlugin("Citizens").isEnabled() == false) {
-			getLogger().log(Level.SEVERE, "Citizens 2.0 not found or not enabled");
-			//getServer().getPluginManager().disablePlugin(this);	
-			return false;
-		}else {
-			return true;
+	private boolean checkDepends() {
+		for (Plugin plugin : Plugin.values()) {
+			if (info.getPlugindepends().containsKey(plugin)) {
+				if (info.getPlugindepends().get(plugin)) {
+					if (plugin.getPlugin() == null || plugin.getPlugin().isEnabled() == false) {
+						Utils.sendSevere("Plugin | " + plugin.getPlugin().getName() + " | is not enable");
+						getServer().getPluginManager().disablePlugin(this);
+						return false;
+					} else {
+						return true;
+					}
+				}
+			}
 		}
+		return false;
 	}
 
 	public static PluginInfo getInfo() {

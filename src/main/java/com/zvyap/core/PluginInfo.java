@@ -87,7 +87,7 @@ public class PluginInfo {
 		this.Plugindepends.put(plugin, isHardDepend);
 	}
 
-	public enum Plugin {
+	public static enum Plugin {
 		PlaceHolderAPI(PluginMain.getInstance().getServer().getPluginManager().getPlugin("PlaceHolderAPI")),
 		Citizens(PluginMain.getInstance().getServer().getPluginManager().getPlugin("Citizens"));
 		

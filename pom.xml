@@ -8,6 +8,14 @@
 	<name>ZCore</name>
 	<description>A utils plugin for zvyap's plugin</description>
 
+	<distributionManagement>
+		<repository>
+			<id>com.zvyap</id>
+			<name>zcore</name>
+			<url>file://${user.home}/.m2/repository</url>
+		</repository>
+	</distributionManagement>
+
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>

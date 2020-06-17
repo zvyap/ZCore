@@ -36,6 +36,7 @@ public abstract class PluginMain extends JavaPlugin {
 		if(!checkDepends()) {
 			return;
 		}
+		saveDefaultConfig();
 		setupFile();
 		setupCommand();
 		setupListener();

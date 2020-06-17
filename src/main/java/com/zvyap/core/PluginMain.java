@@ -100,6 +100,18 @@ public abstract class PluginMain extends JavaPlugin {
 			if (info.getPlugindepends().containsKey(plugin)) {
 				if (info.getPlugindepends().get(plugin)) {
 					if (plugin.getPlugin() == null || plugin.getPlugin().isEnabled() == false) {
+						String header = "============= "+ info.getPluginName() +" =============";
+						String footer = "";
+						for(int i = 0; i > header.length(); i++) {
+							footer = footer + "=";
+						}
+						System.out.println(header);
+						System.out.println(" ");
+						System.out.println("Plugin Load Fail: Plugin | " + plugin.getPlugin().getName() + " | is not loaded on this server, please install "+ plugin.getPlugin().getName() +" on this server.");
+						System.out.println(" ");
+						System.out.println("Minecraft Server Version: " + version.toString());
+						System.out.println(" ");
+						System.out.println(footer);
 						Utils.sendSevere("Plugin | " + plugin.getPlugin().getName() + " | is not enable");
 						getServer().getPluginManager().disablePlugin(this);
 						return false;

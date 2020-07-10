@@ -23,7 +23,7 @@ public class DataFileManager {
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
-		File file = new File(folder + filename + ".dat");
+		File file = new File(folder, filename + ".dat");
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -33,8 +33,11 @@ public class DataFileManager {
 		}
 	}
 
-	public void saveObject(String filename, Object object) {
-		File file = new File(folder + filename + ".dat");
+	public synchronized void saveObject(String filename, Object object) {
+		File file = new File(folder, filename + ".dat");
+		if(!file.exists()) {
+			createDataFile(filename);
+		}
 		try {
 			ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(file));
 			stream.writeObject(object);
@@ -46,7 +49,10 @@ public class DataFileManager {
 	}
 
 	public Object loadFile(String filename) {
-		File file = new File(folder + filename + ".dat");
+		File file = new File(folder, filename + ".dat");
+		if(!file.exists()) {
+			createDataFile(filename);
+		}
 		try {
 			ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file));
 			Object obj = stream.readObject();

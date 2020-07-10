@@ -6,31 +6,78 @@ import javax.annotation.Nullable;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import com.zvyap.core.objects.SoundType;
 
 public abstract class McCommand {
 
-	private String cmd, decs, perms, permsMsg;
-	private List<String> aliases, tabComplete;
-
-	public McCommand(String cmd, String decs, String perms, String permsMsg, List<String> aliases) {
+	protected String cmd, decs, perms, permsMsg;
+	protected List<String> aliases, tabComplete;
+	protected McCommandManager manager;
+	protected SoundType failSound, successSound;
+	protected boolean playeronly;
+	
+	public McCommand(McCommandManager manager, String cmd) {
+		this.manager = manager;
+		this.cmd = cmd;
+		
+		manager.registerCommand(cmd, this);
+	}
+	
+	public McCommand(McCommandManager manager, String cmd, String decs, String perms, String permsMsg, List<String> aliases) {
+		this.manager = manager;
 		this.cmd = cmd;
 		this.decs = decs;
 		this.perms = perms;
 		this.permsMsg = permsMsg;
 		this.aliases = aliases;
+		
+		manager.registerCommand(cmd, this);
 	}
 
-	protected abstract void onCommand(CommandCtx ctx);
+	protected abstract boolean onCommand(CommandCtx ctx);
 
 	protected abstract List<String> onTabComplete(CommandCtx ctx);
 
 	public void execute(CommandSender sender, @Nullable Command cmd, String label, String[] args) {
+		if(playeronly) {
+			if(sender instanceof Player) {
+				return;
+			}
+		}
+		if(perms != null && !sender.hasPermission(perms)) {
+			if(permsMsg != null) {
+				sender.sendMessage(permsMsg);
+			}else {
+				sender.sendMessage("You dont have permission to use this");
+			}
+			if(failSound != null) {
+				if(sender instanceof Player) {
+					failSound.play((Player) sender);
+				}
+			}
+			return;
+		}
+		
 		CommandCtx ctx = new CommandCtx(sender, cmd, label, args, this);
-		onCommand(ctx);
+		if(onCommand(ctx)) {
+			if(successSound != null) {
+				if(sender instanceof Player) {
+					successSound.play((Player) sender);
+				}
+			}
+		}
 	}
 	
 	public void execute(CommandCtx ctx) {
-		onCommand(ctx);
+		if(onCommand(ctx)) {
+			if(successSound != null) {
+				if(ctx.getSender() instanceof Player) {
+					successSound.play((Player) ctx.getSender());
+				}
+			}
+		}
 	}
 	
 	private void tabExecute(CommandSender sender, Command cmd, String label, String[] args) {

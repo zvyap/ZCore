@@ -63,7 +63,7 @@ public class ConfigSetting {
 		}
 	}
 
-	public boolean isBoolean() {
+	public boolean getBoolean() {
 		try {
 			return Boolean.parseBoolean(String);
 		} catch (Exception e) {

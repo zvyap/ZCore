@@ -10,13 +10,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
-public class McCommandExecute implements CommandExecutor, TabExecutor {
+public class McCommandExecutor implements CommandExecutor, TabExecutor {
 	
 	static ArrayList<McCommandManager> managers = McCommandManager.getCommandManagers();
 
 	private McCommand mc;
 	
-	public McCommandExecute(McCommand mc) {
+	public McCommandExecutor(McCommand mc) {
 		this.mc = mc;
 	}
 	

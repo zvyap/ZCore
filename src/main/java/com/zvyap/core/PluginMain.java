@@ -29,14 +29,15 @@ public abstract class PluginMain extends JavaPlugin {
 	public final void onEnable() {
 		info = new PluginInfo(getDescription());
 		plgMain = this;
+		saveDefaultConfig();
+		saveConfig();
 		setupEnable();
 		if(!checkSupport()) {
 			return;
 		}
-		if(!checkDepends()) {
-			return;
-		}
-		saveDefaultConfig();
+//		if(!checkDepends()) {
+//			return;
+//		}
 		setupFile();
 		setupCommand();
 		setupListener();
@@ -59,8 +60,8 @@ public abstract class PluginMain extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage("=====================================");
 	}
 	
-	protected void registerListener(Listener listener, org.bukkit.plugin.Plugin plugin) {
-		getServer().getPluginManager().registerEvents(listener, plugin);;
+	protected void registerListener(Listener listener) {
+		getServer().getPluginManager().registerEvents(listener, this);;
 	}
 	
 	protected void registerCommand(String cmd, CommandExecutor executor) {
@@ -76,7 +77,7 @@ public abstract class PluginMain extends JavaPlugin {
 	}
 	
 	private boolean checkSupport() {
-		if (info.isSupportVersion(version)) {
+		if (!info.isSupportVersion(version)) {
 			String header = "============= "+ info.getPluginName() +" =============";
 			String footer = "";
 			for(int i = 0; i > header.length(); i++) {
@@ -96,6 +97,7 @@ public abstract class PluginMain extends JavaPlugin {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean checkDepends() {
 		for (Plugin plugin : Plugin.values()) {
 			if (info.getPlugindepends().containsKey(plugin)) {

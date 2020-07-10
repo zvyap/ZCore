@@ -10,6 +10,9 @@ public class FolderManager {
 	private File folder;
 	
 	public FolderManager(File folder) {
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
 		if(folder.isDirectory()) {
 			this.setFolder(folder);
 		}else {

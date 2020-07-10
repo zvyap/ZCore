@@ -1,5 +1,10 @@
 package com.zvyap.core.utils;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -62,7 +67,7 @@ public class Utils {
 //	}
 	
 	public static void setupUtils() {
-		ItemTagUtils.setup();
+		//ItemTagUtils.setup();
 	}
 
 	public static void sendSevere(String msg) {
@@ -79,6 +84,10 @@ public class Utils {
 
 	public static void sendLog(String msg) {
 		PluginMain.getInstance().getLogger().info(msg);
+	}
+	
+	public static void sendConsole(String msg) {
+		Bukkit.getConsoleSender().sendMessage(msg);
 	}
 	
 	public static void playDing(Player p) {
@@ -98,20 +107,19 @@ public class Utils {
 		p.sendMessage(msg);
 		p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 	}
-	
-	public static float setfloat(String path) {
-		double f = (float) PluginMain.getInstance().getConfig().getDouble(path);
-		return (float) f;
-	}
-	
-	public static String getBooleanResult(String in) {
-		switch (in.toLowerCase()) {
-			case "true":
-				return "true";
-			case "false":
-				return "false";
-			default:
-				return "null";
-		}
-	}
+
+    public static String formatTime(long timeInMillis) {
+        final long hours = timeInMillis / TimeUnit.HOURS.toMillis(1);
+        final long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
+        final long seconds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+    
+    public static String randomString(int length) {
+        byte[] array = new byte[length]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String s = new String(array, Charset.forName("UTF-8"));
+		return s;
+    }
 }

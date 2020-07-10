@@ -27,7 +27,7 @@ public class PluginInfo {
 		pluginPage = descFile.getWebsite();
 		this.version = descFile.getVersion();
 		this.serverVersion = Version.getCurrentVersion();
-		supportedVersion.addAll(Version.v1_12_R1.toVersion(Version.v1_15_R1));
+		supportedVersion.addAll(Version.v1_12_R1.toVersion(Version.v1_16_R1));
 	}
 
 	public String getPluginName() {

@@ -2,6 +2,8 @@ package com.zvyap.core;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 
 public enum Version {
@@ -21,7 +23,8 @@ public enum Version {
 	v1_13_R1(1132), 
 	v1_13_R2(1132), 
 	v1_14_R1(1141),
-	v1_15_R1(1151), 
+	v1_15_R1(1151),
+	v1_16_R1(1161),
 	TOO_NEW(-2);
 
 	public static Version currentVersion;
@@ -69,6 +72,7 @@ public enum Version {
 		return this.versionInteger;
 	}
 	
+	@Nullable
 	public ArrayList<Version> toVersion(Version version) {
 		int ver = version.getVersionInteger().intValue();
 		if(ver == -1 || ver == -2 || this.versionInteger == -1 || this.versionInteger == -2) {
